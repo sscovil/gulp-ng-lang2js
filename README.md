@@ -115,7 +115,6 @@ function buildTranslationCache() {
     return gulp.src('./src/app/**/en.json')
         .pipe(jsonMinify())
         .pipe(ngLang2Js({
-            declareModule: true,
             moduleName   : 'app.i18n',
             prefix       : 'i18n/'
         }))
@@ -172,7 +171,6 @@ function buildTranslationCache() {
     return gulp.src('./src/app/**/{' + lang + '}.json')
         .pipe(jsonMinify())
         .pipe(ngLang2Js({
-            declareModule: true,
             moduleName   : 'app.i18n',
             prefix       : 'i18n/'
         }))
