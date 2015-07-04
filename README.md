@@ -20,11 +20,11 @@ Yes? Great. You should keep reading.
 Let's say you have a modular Angular app with a `src` directory structure like this:
 
 ```
-src
+/src
 ├── index.html
 ├── app.js
-├── view1
-│   ├── lang
+├── /view1
+│   ├── /lang
 │   │   ├── de.json
 │   │   ├── en.json
 │   │   ├── es.json
@@ -32,8 +32,8 @@ src
 │   ├── view1.css
 │   ├── view1.html
 │   └── view1.js
-└── view2
-    ├── lang
+└── /view2
+    ├── /lang
     │   ├── de.json
     │   ├── en.json
     │   ├── es.json
@@ -46,17 +46,17 @@ src
 Now let's say you have a build task that copies your language files into a `/dist` directory like this:
 
 ```
-dist
+/dist
 ├── index.html
 ├── app.js
-└── i18n
-    ├── view1
+└── /i18n
+    ├── /view1
     │   └── lang
     │       ├── de.json
     │       ├── en.json
     │       ├── es.json
     │       └── fr.json
-    └── view2
+    └── /view2
         └── lang
             ├── de.json
             ├── en.json
@@ -153,13 +153,12 @@ function translateConfig($translateProvider) {
 
 ...and you're good to go!
 
-All of the partial files for the language you specified in `gulp.src()` (`**/en.json` in this example) have been added
-to `$translationCache`, so your app will not suffer from the FOUC issue and your modular directory structure can remain
-in tact.
+All of the partial files for the language you specified in `gulp.src()` have been added to `$translationCache`, so your
+app will not suffer from the FOUC issue and your modular directory structure can remain in tact.
 
 ## Bonus Gulp Recipe: Configurable Languages
 
-Want to make your gulp task include one or more languages that can be specified at runtime? Try this:
+Want to make your gulp task include one or more languages that can be specified at build time? Try this:
 
 ```javascript
 gulp.task('build-translation-cache', buildTranslationCache);
