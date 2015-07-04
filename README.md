@@ -112,7 +112,7 @@ function buildTranslationCache() {
     var jsonMinify = require('gulp-jsonminify');
     var ngLang2Js = require('gulp-ng-lang2js');
 
-    return gulp.src('./app/**/en.json')
+    return gulp.src('./src/app/**/en.json')
         .pipe(jsonMinify())
         .pipe(ngLang2Js({
             declareModule: true,
@@ -169,7 +169,7 @@ function buildTranslationCache() {
     var jsonMinify = require('gulp-jsonminify');
     var ngLang2Js = require('gulp-ng-lang2js');
 
-    return gulp.src('./app/**/{' + lang + '}.json')
+    return gulp.src('./src/app/**/{' + lang + '}.json')
         .pipe(jsonMinify())
         .pipe(ngLang2Js({
             declareModule: true,
