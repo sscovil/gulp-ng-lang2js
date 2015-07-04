@@ -1,0 +1,43 @@
+{
+  "name": "gulp-ng-lang2js",
+  "version": "0.2.0",
+  "description": "A Gulp plugin which generates AngularJS modules, which pre-load your JSON language files into the $translationCache. This way AngularJS doesn't need to request the actual JSON files anymore.",
+  "keywords": [
+    "gulpplugin",
+    "ng-lang2js",
+    "angular",
+    "lang2js",
+    "angularjs",
+	"translate",
+	"i18n",
+	"l10n",
+	"internationalization",
+	"localization"
+  ],
+  "homepage": "https://github.com/sscovil/gulp-ng-lang2js",
+  "bugs": "https://github.com/sscovil/gulp-ng-lang2js/issues",
+  "author": {
+    "name": "Shaun Scovil",
+    "email": "sscovil@gmail.com",
+    "url": "https://github.com/sscovil"
+  },
+  "main": "./index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/sscovil/gulp-ng-lang2js.git"
+  },
+  "dependencies": {
+    "gulp-util": "*",
+    "lodash": "^3.3.0",
+    "map-stream": "*"
+  },
+  "engines": {
+    "node": ">=0.8.0",
+    "npm": ">=1.2.10"
+  },
+  "licenses": [
+    {
+      "type": "MIT"
+    }
+  ]
+}
