@@ -164,11 +164,12 @@ gulp.task('build-translation-cache', buildTranslationCache);
 
 function buildTranslationCache() {
     var concat = require('gulp-concat');
-    var lang = process.env.LANG || 'en';
+    var defaultLanguage = 'en';
+    var languages = globMultipleLanguages(process.env.LANGUAGES || defaultLanguage);
     var jsonMinify = require('gulp-jsonminify');
     var ngLang2Js = require('gulp-ng-lang2js');
 
-    return gulp.src('./src/app/**/{' + lang + '}.json')
+    return gulp.src('./src/app/**/{' + languages + '}.json')
         .pipe(jsonMinify())
         .pipe(ngLang2Js({
             moduleName   : 'app.i18n',
@@ -177,13 +178,17 @@ function buildTranslationCache() {
         .pipe(concat('lang.js'))
         .pipe(gulp.dest('./dist/i18n'))
     ;
+    
+    function globMultipleLanguages(languages) {
+    	return languages.split(',').length > 1 ? '{' + languages + '}' : languages;
+    }
 }
 ```
 
-Then run the task with the node environment variable `LANG` set to a comma-separated list of language codes, like this:
+Then run the task with the node environment variable `LANGUAGES` set to a comma-separated list of language codes, like this:
 
 ```shell
-LANG='en,sp' gulp build-translation-cache
+LANGUAGES='en,sp' gulp build-translation-cache
 ```
 
 That would include both English and Spanish languages in the build.
