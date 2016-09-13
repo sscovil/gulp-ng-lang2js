@@ -3,11 +3,14 @@ var gutil = require("gulp-util");
 var map = require("map-stream");
 
 var TRANSLATIONS = {
-    MODULE_PER_FILE: "angular.module('<%= moduleName %>', []).run(['$translationCache', function($translationCache) {\n" +
+    MODULE_PER_FILE: "define(['angular'], function(angular) { 'use strict';\n" +
+    "angular.module('<%= moduleName %>', []).run(['$translationCache', function($translationCache) {\n" +
     "  $translationCache.put('<%= translation.url %>',\n    '<%= translation.prettyEscapedContent %>');\n" +
-    "}]);\n",
+    "}]);\n" +
+    "});\n",
 
-    SINGLE_MODULE: "(function(module) {\n" +
+    SINGLE_MODULE: "define(['angular'], function(angular) { 'use strict';\n" +
+    "(function(module) {\n" +
     "try {\n" +
     "  module = angular.module('<%= moduleName %>');\n" +
     "} catch (e) {\n" +
@@ -16,11 +19,14 @@ var TRANSLATIONS = {
     "module.run(['$translationCache', function($translationCache) {\n" +
     "  $translationCache.put('<%= translation.url %>',\n    '<%= translation.prettyEscapedContent %>');\n" +
     "}]);\n" +
-    "})();\n",
+    "})();\n" +
+    "});\n",
 
-    SINGLE_DECLARED_MODULE: "angular.module('<%= moduleName %>').run(['$translationCache', function($translationCache) {\n" +
+    SINGLE_DECLARED_MODULE: "define(['angular'], function(angular) { 'use strict';\n" +
+    "angular.module('<%= moduleName %>').run(['$translationCache', function($translationCache) {\n" +
     "  $translationCache.put('<%= translation.url %>',\n    '<%= translation.prettyEscapedContent %>');\n" +
-    "}]);\n"
+    "}]);\n" +
+    "});\n"
 };
 
 /**
