@@ -3,8 +3,8 @@ var gutil = require("gulp-util");
 var map = require("map-stream");
 
 var TRANSLATIONS = {
-    MODULE_PER_FILE: "angular.module('<%= moduleName %>', []).run(['$translationCache', function($translationCache) {\n" +
-    "  $translationCache.put('<%= translation.url %>',\n    '<%= translation.prettyEscapedContent %>');\n" +
+    MODULE_PER_FILE: "angular.module('<%= moduleName %>', []).run(['<%= cacheName %>', function(<%= cacheName %>) {\n" +
+    "  <%= cacheName %>.put('<%= translation.url %>',\n    '<%= translation.prettyEscapedContent %>');\n" +
     "}]);\n",
 
     SINGLE_MODULE: "(function(module) {\n" +
@@ -13,25 +13,26 @@ var TRANSLATIONS = {
     "} catch (e) {\n" +
     "  module = angular.module('<%= moduleName %>', []);\n" +
     "}\n" +
-    "module.run(['$translationCache', function($translationCache) {\n" +
-    "  $translationCache.put('<%= translation.url %>',\n    '<%= translation.prettyEscapedContent %>');\n" +
+    "module.run(['<%= cacheName %>', function(<%= cacheName %>) {\n" +
+    "  <%= cacheName %>.put('<%= translation.url %>',\n    '<%= translation.prettyEscapedContent %>');\n" +
     "}]);\n" +
     "})();\n",
 
-    SINGLE_DECLARED_MODULE: "angular.module('<%= moduleName %>').run(['$translationCache', function($translationCache) {\n" +
-    "  $translationCache.put('<%= translation.url %>',\n    '<%= translation.prettyEscapedContent %>');\n" +
+    SINGLE_DECLARED_MODULE: "angular.module('<%= moduleName %>').run(['<%= cacheName %>', function(<%= cacheName %>) {\n" +
+    "  <%= cacheName %>.put('<%= translation.url %>',\n    '<%= translation.prettyEscapedContent %>');\n" +
     "}]);\n"
 };
 
 /**
  * Converts JSON language files into Javascript files which contain an AngularJS module which automatically pre-loads the JSON file
- * into the [$translationCache](http://angular-translate.github.io/docs/#/api/pascalprecht.translate.$translationCache). This way
+ * into the [$translationCache](http://angular-translate.github.io/docs/#/api/pascalprecht.translate.$translationCache) or the cache specified by options.cacheName. This way
  * AngularJS doens't need to request the actual JSON file anymore.
  * @param [options] - The plugin options
  * @param [options.moduleName] - The name of the module which will be generated. When omitted the fileUrl will be used.
  * @param [options.declareModule] - Whether to try to create the module. Default true, if false it will not create options.moduleName.
  * @param [options.stripPrefix] - The prefix which should be stripped from the file path
  * @param [options.prefix] - The prefix which should be added to the start of the url
+ * @param [options.cacheName] - The name of the translation cache that should be used. When omitted, $translationCache will be used.
  * @returns {stream}
  */
 module.exports = function (options) {
@@ -81,6 +82,7 @@ module.exports = function (options) {
                 }
             };
             params.moduleName = getModuleName(params.translation.url);
+            params.cacheName = getCacheName();
             params.translation.content = String(translationFile.contents);
             params.translation.escapedContent = getEscapedTranslationContent(params.translation.content);
             params.translation.prettyEscapedContent = getPrettyEscapedContent(params.translation.content);
@@ -97,6 +99,14 @@ module.exports = function (options) {
             }
             else {
                 return translationUrl;
+            }
+        }
+
+        function getCacheName() {
+            if (options && options.cacheName) {
+                return options.cacheName;
+            } else {
+                return '$translationCache'
             }
         }
 
