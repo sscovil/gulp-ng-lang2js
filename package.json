@@ -8,11 +8,11 @@
     "angular",
     "lang2js",
     "angularjs",
-	"translate",
-	"i18n",
-	"l10n",
-	"internationalization",
-	"localization"
+    "translate",
+    "i18n",
+    "l10n",
+    "internationalization",
+    "localization"
   ],
   "homepage": "https://github.com/sscovil/gulp-ng-lang2js",
   "bugs": "https://github.com/sscovil/gulp-ng-lang2js/issues",
@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "gulp-util": "*",
-    "lodash": "^3.3.0",
+    "lodash": "^4.0.0",
     "map-stream": "*"
   },
   "engines": {
